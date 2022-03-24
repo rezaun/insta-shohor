@@ -16,9 +16,11 @@ const isLiked = (id) => {
 };
 
 const addToLiked = (id) => {
-    likedPostsId(id); 
+    likedPostsId.push(id);
+
     showPosts(posts);
 };
+
 
 const reportPost = (id) => {
     reportedPostsId.push(id);
@@ -51,9 +53,10 @@ const switchTab = (id) => {
 };
 
 const createPost = (post) => {
-  console.log(post);
+  // console.log(post);
     const image = post.image;
     const div = document.createElement( "article" );
+    const itemDescription = post.description;
     div.classList.add( "post" );
     div.innerHTML = `
               <div class="post__header">
@@ -102,8 +105,8 @@ const createPost = (post) => {
                     <i class="fa-solid fa-ban"></i>
                   </button>
                 </div>
-
-                <div class="post__content">${displayContent(post.description)}</div>
+                
+                <div class="post__content">${ (itemDescription.length > 30 ) ? itemDescription.substr(0, 30) + ' ... <a href="#">Read More</a>' : itemDescription }</div>
 
                 <div class="post__infos">
                   <div class="post__likes">
@@ -153,7 +156,7 @@ const displayLikedPosts = () => {
 
 const displayReportedPosts = () => {
     const reportedPosts = getReportedPosts();
-    posts.forEach((post) => {
+    reportedPosts.forEach((post) => {
         const div = createPost(post);
         document.getElementById( "reported" ).appendChild(div);
     });
